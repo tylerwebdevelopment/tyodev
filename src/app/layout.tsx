@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins, JetBrains_Mono } from "next/font/google";
 // Import Global Styles for tailwind and shadcn
 import "./globals.css";
+import NavigationBar from "@/components/layout/NavigationBar";
 
 // Configure Google Fonts For Use
 
@@ -37,28 +38,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html 
+    <html
       lang="en"
       className={`${inter.variable} ${poppins.variable} ${jetBrainsMono.variable} dark`}
     >
-      <body>
-        {/* Application Wrapper */}
-        <div
-          className="ApplicationWrapper bg-background text-text-strong h-screen w-screen flex flex-col "
-          id="ApplicationWrapper"
-        >
-          <div>Navigaiton Bar</div>
-          {/* Navigation Bar and Footer Live In ApplicationWrapper */}
-          <div
-            className="ApplicationContent flex-1 px-4"
-            id="ApplicationContent"
-          >
-            {/* Page Content Lives in ApplicationContent */}
-            {children}
-          </div>
-
-          <div>Footer</div>
-        </div>
+      <body className="bg-page-background text-text-main">
+        <main>
+          <NavigationBar />
+          {children}
+        </main>
       </body>
     </html>
   );
