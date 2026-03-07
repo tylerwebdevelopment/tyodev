@@ -66,7 +66,7 @@ const NavigationBar = () => {
                 )}
               </div>
             ))}
-            <Button className="rounded-full">Contact</Button>
+            <Button className="rounded-full" size={'sm'} variant={'outline'}>Contact</Button>
           </ul>
         </div>
       </nav>

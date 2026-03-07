@@ -10,7 +10,7 @@ import NavigationBar from "@/components/layout/NavigationBar";
 // Inter
 export const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-body",
   weight: ["400", "500", "700"],
 });
 // Poppins
@@ -43,6 +43,13 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} ${jetBrainsMono.variable} dark`}
     >
       <body className="bg-page-background text-text-main">
+        <div
+          className="pointer-events-none fixed inset-0 z-10 opacity-[0.03]"
+          style={{
+            backgroundImage: "url('/grain.jpeg')",
+            backgroundRepeat: "repeat",
+          }}
+        />
         <main>
           <NavigationBar />
           {children}
