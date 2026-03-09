@@ -4,6 +4,7 @@ import { Inter, Poppins, JetBrains_Mono } from "next/font/google";
 // Import Global Styles for tailwind and shadcn
 import "./globals.css";
 import NavigationBar from "@/components/layout/NavigationBar";
+import { TooltipProvider } from "@/components/ui";
 
 // Configure Google Fonts For Use
 
@@ -43,16 +44,18 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} ${jetBrainsMono.variable} dark`}
     >
       <body className="bg-page-background text-text-main">
-        <div
-          className="pointer-events-none fixed inset-0 z-10 opacity-[0.03]"
-          style={{
-            backgroundImage: "url('/grain.jpeg')",
-            backgroundRepeat: "repeat",
-          }}
-        />
-        <main>
+        <main className="relative">
+          <div
+            className="pointer-events-none min-w-full min-h-full absolute inset-0 z-10 opacity-[0.03]"
+            style={{
+              backgroundImage: "url('/grain.jpeg')",
+              backgroundRepeat: "repeat",
+            }}
+          />
           <NavigationBar />
-          {children}
+          <TooltipProvider>
+            <div className="relative z-30">{children}</div>
+          </TooltipProvider>
         </main>
       </body>
     </html>

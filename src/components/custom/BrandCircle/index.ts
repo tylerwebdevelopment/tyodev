@@ -1,0 +1,1 @@
+export { default, type BrandCircleProps } from './BrandCircle';

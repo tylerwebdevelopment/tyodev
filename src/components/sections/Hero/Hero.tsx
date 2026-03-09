@@ -1,10 +1,13 @@
+"use client";
 import Memoji from "@/assets/memoji.png";
 import Button from "@/components/ui";
+import { motion } from "motion/react";
+import { MousePointerClick } from "lucide-react";
 import Image from "next/image";
-import { CircleArrowRight } from "lucide-react";
+
 const Hero = () => {
   return (
-    <section className="relative w-full min-h-[65vh] bg-page-background overflow-hidden">
+    <section className="relative w-full z-20 min-h-[65vh] bg-page-background/5 overflow-hidden">
       {/* Grid Background */}
       <div
         className="absolute inset-0 z-0"
@@ -22,10 +25,10 @@ const Hero = () => {
       />
 
       {/* Hero Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-6 pt-32 pb-20 text-center">
-        <div className="space-y-3">
+      <div className="relative max-w-5xl mx-auto z-20  px-6 pt-32 pb-20 text-center">
+        <div className="space-y-3 ">
           <div className="p-5 max-w-md space-x-1 space-y-0.5 mx-auto">
-            <div>
+            <div className="">
               <p className="text-md text-text-main relative bg-surface-elevated py-1 before:w-[25px] before:content-[''] before:bg-surface-elevated before:block before:absolute before:-bottom-[.8px] before:h-1 before:z-10 before:right-1/2 before:translate-x-1/2 border border-border-default rounded-full px-4 before:content-[''] before: max-w-fit mx-auto ">
                 Hi I&apos;m{" "}
                 <span className="font-bold text-primary-600">Tyler</span>{" "}
@@ -62,13 +65,16 @@ const Hero = () => {
             </p>
           </div>
           <div className="py-9">
-            <Button
-              variant={"default"}
-              className="text-lg font-bold tracking-tightest"
-              size={"lg"}
-            >
-              Lets Connect
-            </Button>
+            <motion.div whileHover={{ scale: 1.07 }} whileTap={{scale: 1.02}} className="w-fit mx-auto">
+              <Button
+                size={'lg'}
+                variant={"gradientCTA"}
+                className="text-lg font-bold text-shadow-md tracking-tightest"
+              >
+                Lets Connect
+                <MousePointerClick className="" />
+              </Button>
+            </motion.div>
           </div>
         </div>
       </div>

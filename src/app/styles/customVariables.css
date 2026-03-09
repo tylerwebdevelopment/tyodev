@@ -1,0 +1,8 @@
+:root {
+  --react: oklch(0.8343 0.1167 217.91);
+  --next: oklch(0.9585 0 0);
+  --tailwind: oklch(0.7535 0.139 232.66);
+  --postgresql: oklch(0.4973 0.0875 245.25);
+  --prisma: oklch(0.5631 0.1717 274.55);
+  --betterAuth: oklch(0.9585 0 0);
+}

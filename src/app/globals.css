@@ -1,7 +1,9 @@
 @config '../../tailwind.config.js';
+@import "./styles/customVariables.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+
 @import "./styles/tailwind-custom-theme.css";
 
 @custom-variant dark (&:is(.dark *));
@@ -136,6 +138,34 @@
   animation: emojiWave 10s infinite;
 }
 
+.gradient-btn {
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-500),
+    var(--color-primary-400),
+    var(--color-primary-500),
+    var(--color-primary-600),
+    var(--color-primary-700),
+    var(--color-primary-600),
+    var(--color-primary-500)
+  );
+  background-size: 200% 100%;
+  animation: gradientShift 5s linear infinite;
+  animation-play-state: paused;
+}
+.gradient-btn:hover {
+  animation-play-state: running;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 200%;
+  }
+}
+
 .animated-gradient-text {
   color: transparent;
   background: linear-gradient(
@@ -195,6 +225,26 @@
   .active {
     @apply text-primary-600;
   }
+  .border-gradient-before::before {
+    content: "";
+    will-change: transform;
+    position: absolute;
+    inset: -100%;
+    z-index: 0;
+    background: conic-gradient(
+      hsla(152 78% 80% / 60%) 0%,
+      hsla(161 100% 42% / 10%) 5%,
+      transparent 10deg
+    );
+    animation: cardGradient 50s linear infinite;
+  }
+  @keyframes cardGradient {
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  
   /* border triangle */
   .fill-triangle {
     @apply after:border-[12px] after:content-['']  after:size-0 after:border-t-surface-elevated after:relative after:border-b-0 after:border-x-transparent;
@@ -202,5 +252,9 @@
   /* fill triangle */
   .border-triangle {
     @apply before:size-0 before:content-[''] before:border-t-border-default before:border-[16px] before:absolute before:border-b-0 before:border-x-transparent;
+  }
+
+  .card-brand-icon {
+    @apply text-2xl inline-flex items-center bg-surface/50 p-1.5 border border-border-default rounded-full focus:ring-3 transition-all duration-300 ring-primary-500/10 hover:border-emerald-200/50;
   }
 }
