@@ -267,12 +267,19 @@
     @apply w-3;
   }
   .textarea-scroll::-webkit-scrollbar-track {
-    @apply bg-surface rounded-lg;
+    @apply bg-surface rounded-r-full;
   }
   .textarea-scroll::-webkit-scrollbar-thumb {
     @apply bg-primary-500 w-1 transition-all duration-300 rounded-full cursor-default;
   }
   .textarea-scroll::-webkit-scrollbar-thumb:hover {
     @apply bg-primary-600;
+  }
+
+  .input-control-invalid-helper {
+    @apply bg-red-500/30 w-fit text-xs text-red-100  rounded-sm px-2 py-0.5;
+  }
+  .input-control-invalid{
+    @apply border-red-400 focus:ring-3 ring-red-500/30 focus:border-red-400
   }
 }
