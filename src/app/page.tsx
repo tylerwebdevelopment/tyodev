@@ -1,6 +1,4 @@
-import  Projects  from "@/components/sections/Projects";
-import Hero from "@/components/sections/Hero";
-import About from '@/components/sections/About';
+import {Projects, Hero, About, Contact} from '@/components/sections/';
 
 export const HomePage = () => {
   return (
@@ -8,6 +6,7 @@ export const HomePage = () => {
       <Hero />
       <Projects />
       <About />
+      <Contact />
     </>
   );
 };
