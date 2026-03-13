@@ -5,6 +5,7 @@ import { Inter, Poppins, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "@/components/layout/NavigationBar";
 import { Toaster, TooltipProvider } from "@/components/ui";
+import NavigationClientWrapper from "@/components/layout/NavigationBar/NavigationClientWrapper";
 
 // Configure Google Fonts For Use
 
@@ -52,11 +53,12 @@ export default function RootLayout({
               backgroundRepeat: "repeat",
             }}
           />
-          <NavigationBar />
-          <Toaster />
-          <TooltipProvider>
-            <div className="relative z-30">{children}</div>
-          </TooltipProvider>
+          <NavigationClientWrapper>
+            <Toaster />
+            <TooltipProvider>
+              <div className="relative z-30">{children}</div>
+            </TooltipProvider>
+          </NavigationClientWrapper>
         </main>
       </body>
     </html>

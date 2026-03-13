@@ -1,9 +1,15 @@
+"use client";
 import Image from "next/image";
 import MemojiSmiling from "@/assets/memoji-smiling.png";
+import { forwardRef } from "react";
 
-const About = () => {
+const About = forwardRef<HTMLDivElement | null>((props, ref) => {
   return (
-    <section className="max-w-2xl mx-auto py-16 px-8 text-center space-y-8">
+    <section
+      ref={ref}
+      id="about"
+      className="max-w-2xl mx-auto py-16 px-8 text-center space-y-8"
+    >
       <h1 className="text-lg tracking-widest uppercase font-thin text-text-muted">
         About Me
       </h1>
@@ -38,6 +44,8 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
+
+About.displayName = "About";
 
 export default About;

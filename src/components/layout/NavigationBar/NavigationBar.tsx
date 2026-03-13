@@ -1,12 +1,20 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "motion/react";
 import Button from "@/components/ui";
+import { ScrollContext } from "@/lib/context/ScrollContext";
+import path from "path";
 
-const NavigationBar = () => {
-  const [active, setActive] = useState<string>("/");
+interface NavigationBarProps {
+  active: string;
+  setActive: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const NavigationBar = ({ active, setActive }: NavigationBarProps) => {
   const [scrolled, setScrolled] = useState<boolean>(false);
+
+  const { ScrollToAbout } = useContext(ScrollContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,13 +30,15 @@ const NavigationBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // About Section Observer
+
   const links = [
     {
       href: "/",
       label: "Home",
     },
     {
-      href: "/about",
+      href: "/#about",
       label: "About",
     },
     {
@@ -36,6 +46,28 @@ const NavigationBar = () => {
       label: "Projects",
     },
   ];
+
+  const handleClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    linkHref: string,
+  ) => {
+    const isHome = window.location.pathname === "/";
+
+    if (linkHref === "/#about" && isHome && ScrollToAbout) {
+      e.preventDefault();
+      ScrollToAbout?.();
+      setActive(linkHref);
+    } else if (linkHref === "/" && isHome) {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      setActive(linkHref);
+    } else {
+      setActive(linkHref);
+    }
+  };
 
   return (
     <div className="fixed top-4 inset-x-0 left-0 right-0 flex justify-center z-50">
@@ -45,10 +77,10 @@ const NavigationBar = () => {
         <div>
           <ul className="flex place-items-center gap-6">
             {links.map((link) => (
-              <div key={link.href} className="relative">
+              <li key={link.href} className="relative">
                 <Link
                   href={link.href}
-                  onClick={() => setActive(link.href)}
+                  onClick={(e) => handleClick(e, link.href)}
                   className={`nav-item ${active === link.href ? "active" : "text-text-main transition-colors duration-300 hover:text-primary-800"}`}
                 >
                   {link.label}
@@ -64,9 +96,11 @@ const NavigationBar = () => {
                     }}
                   />
                 )}
-              </div>
+              </li>
             ))}
-            <Button className="rounded-full" size={'sm'} variant={'outline'}>Contact</Button>
+            <Button className="rounded-full" size={"sm"} variant={"outline"}>
+              Contact
+            </Button>
           </ul>
         </div>
       </nav>
