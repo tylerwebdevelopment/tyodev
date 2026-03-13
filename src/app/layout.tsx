@@ -4,7 +4,7 @@ import { Inter, Poppins, JetBrains_Mono } from "next/font/google";
 // Import Global Styles for tailwind and shadcn
 import "./globals.css";
 import NavigationBar from "@/components/layout/NavigationBar";
-import { TooltipProvider } from "@/components/ui";
+import { Toaster, TooltipProvider } from "@/components/ui";
 
 // Configure Google Fonts For Use
 
@@ -53,6 +53,7 @@ export default function RootLayout({
             }}
           />
           <NavigationBar />
+          <Toaster />
           <TooltipProvider>
             <div className="relative z-30">{children}</div>
           </TooltipProvider>

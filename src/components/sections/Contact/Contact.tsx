@@ -3,9 +3,17 @@ import { SendMessage } from "@/actions/sendContactMessage";
 import { InputIcon } from "@/components/custom";
 import ContactSendButton from "@/components/custom/ContactSendButton/ContactSendButton";
 import { Spinner } from "@/components/ui";
-import { Mail, User, Briefcase, Send } from "lucide-react";
+import {
+  Mail,
+  User,
+  Briefcase,
+  Send,
+  MailWarning,
+  MailCheck,
+} from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
+import { toast } from "sonner";
 const Contact = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [errors, setErrors] = useState<any>({});
@@ -18,14 +26,37 @@ const Contact = () => {
 
     const result = await SendMessage(data);
 
-    if (!result?.success) {
-      setErrors(result?.tree);
-      console.log(result?.tree);
+
+    // Form Data Failed Validation
+    if (!result.success && result.tree) {
       setLoading(false);
+      setErrors(result.tree);
+      return;
+    }
+    setErrors({});
+    // Server Could Not Send Emails
+
+    if (!result.success && result.message) {
+      setLoading(false);
+      toast.error("Message Not Sent", {
+        description: result.message,
+        position: "top-center",
+        richColors: true,
+        icon: <MailWarning className="size-5" />,
+      });
+      return;
     }
 
-    if(result?.success){
-      
+    //Success
+    if (result.success && result.message) {
+      setLoading(false);
+      setErrors({});
+      toast.success("Message Sent", {
+        description: result.message,
+        position: "top-center",
+        richColors: true,
+        icon: <MailCheck className="size-5" />,
+      });
     }
   };
   return (
@@ -33,7 +64,7 @@ const Contact = () => {
       <h1 className="text-lg tracking-widest text-center uppercase font-thin text-text-muted">
         Contact
       </h1>
-      <div className="flex flex-col gap-4 justify-content">
+      <div className="flex flex-col gap-6 justify-content">
         <div className="inline-flex items-center py-1 px-2 bg-primary-500/20 mx-auto rounded-lg text-sm gap-2">
           <Mail className="size-4" />
           <Link href={"mailto:owner@tyodev.com"} className="hover:underline">
@@ -77,7 +108,11 @@ const Contact = () => {
                 placeholder="Email Address"
                 icon={Mail}
               />
-              {errors.email?.errors[0] && <span className="input-control-invalid-helper">{errors.email.errors[0]}</span>}
+              {errors.email?.errors[0] && (
+                <span className="input-control-invalid-helper">
+                  {errors.email.errors[0]}
+                </span>
+              )}
             </div>
             <div className="flex flex-col gap-1.5">
               <InputIcon
@@ -92,7 +127,9 @@ const Contact = () => {
                 icon={Briefcase}
               />
               {errors.company_name?.errors[0] && (
-                <span className="input-control-invalid-helper">{errors.company_name.errors[0]}</span>
+                <span className="input-control-invalid-helper">
+                  {errors.company_name.errors[0]}
+                </span>
               )}
             </div>
             <div className="flex flex-col gap-1.5">
@@ -109,7 +146,9 @@ const Contact = () => {
                 placeholder="Enter A Brief Message..."
               />
               {errors.contact_message?.errors[0] && (
-                <span className="input-control-invalid-helper">{errors.contact_message?.errors[0]}</span>
+                <span className="input-control-invalid-helper">
+                  {errors.contact_message?.errors[0]}
+                </span>
               )}
             </div>
             <div className="w-full inline-flex justify-center">
