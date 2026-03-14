@@ -6,6 +6,7 @@ import "./globals.css";
 import NavigationBar from "@/components/layout/NavigationBar";
 import { Toaster, TooltipProvider } from "@/components/ui";
 import NavigationClientWrapper from "@/components/layout/NavigationBar/NavigationClientWrapper";
+import { Footer } from "@/components/layout";
 
 // Configure Google Fonts For Use
 
@@ -25,7 +26,7 @@ export const poppins = Poppins({
 export const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "700", "800"],
 });
 
 // Project Metadata
@@ -45,20 +46,27 @@ export default function RootLayout({
       className={`${inter.variable} ${poppins.variable} ${jetBrainsMono.variable} dark`}
     >
       <body className="bg-page-background text-text-main">
-        <main className="relative">
+        <main className="relative min-h-screen flex flex-col">
+          {/* grain overlay */}
           <div
-            className="pointer-events-none min-w-full min-h-full absolute inset-0 z-10 opacity-[0.03]"
+            className="pointer-events-none absolute inset-0 z-10 opacity-[0.03]"
             style={{
               backgroundImage: "url('/grain.jpeg')",
               backgroundRepeat: "repeat",
             }}
           />
+
           <NavigationClientWrapper>
             <Toaster />
+
             <TooltipProvider>
-              <div className="relative z-30">{children}</div>
+              {/* page content grows */}
+              <div className="relative z-30 flex-1">{children}</div>
             </TooltipProvider>
           </NavigationClientWrapper>
+
+          {/* footer sticks to bottom */}
+          <Footer />
         </main>
       </body>
     </html>
