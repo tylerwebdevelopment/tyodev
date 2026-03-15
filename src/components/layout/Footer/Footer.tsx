@@ -27,7 +27,7 @@ const Footer = () => {
   return (
     <footer className="w-full py-4 pt-6 space-y-4 px-8 flex flex-col gap-6 bg-surface z-99">
       {/* top */}
-      <div className="flex flex-col w-full gap-1.5 justify-center items-center">
+      <div className="flex flex-col w-full gap-2.5 justify-center items-center">
         <h3 className="text-2xl tracking-widest font-mono font-extralight text-text-main">
           <span className="text-primary-600">{`<`}</span>TyoDev{" "}
           <span className="text-primary-600">{`/>`}</span>

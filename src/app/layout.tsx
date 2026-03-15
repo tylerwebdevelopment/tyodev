@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter, Poppins, JetBrains_Mono } from "next/font/google";
 // Import Global Styles for tailwind and shadcn
 import "./globals.css";
-import NavigationBar from "@/components/layout/NavigationBar";
 import { Toaster, TooltipProvider } from "@/components/ui";
 import NavigationClientWrapper from "@/components/layout/NavigationBar/NavigationClientWrapper";
 import { Footer } from "@/components/layout";
