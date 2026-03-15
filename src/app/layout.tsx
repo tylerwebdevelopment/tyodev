@@ -6,6 +6,7 @@ import "./globals.css";
 import { Toaster, TooltipProvider } from "@/components/ui";
 import NavigationClientWrapper from "@/components/layout/NavigationBar/NavigationClientWrapper";
 import { Footer } from "@/components/layout";
+import { AuthProvider } from "@/lib/context/AuthContext";
 
 // Configure Google Fonts For Use
 
@@ -54,18 +55,19 @@ export default function RootLayout({
               backgroundRepeat: "repeat",
             }}
           />
+          <AuthProvider>
+            <NavigationClientWrapper>
+              <Toaster />
 
-          <NavigationClientWrapper>
-            <Toaster />
+              <TooltipProvider>
+                {/* page content grows */}
+                <div className="relative z-30 flex-1">{children}</div>
+              </TooltipProvider>
+            </NavigationClientWrapper>
 
-            <TooltipProvider>
-              {/* page content grows */}
-              <div className="relative z-30 flex-1">{children}</div>
-            </TooltipProvider>
-          </NavigationClientWrapper>
-
-          {/* footer sticks to bottom */}
-          <Footer />
+            {/* footer sticks to bottom */}
+            <Footer />
+          </AuthProvider>
         </main>
       </body>
     </html>

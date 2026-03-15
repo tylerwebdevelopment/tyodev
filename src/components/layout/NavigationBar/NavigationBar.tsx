@@ -2,16 +2,49 @@
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "motion/react";
-import Button from "@/components/ui";
+import Button, { Skeleton } from "@/components/ui";
 import { ScrollContext } from "@/lib/context/ScrollContext";
-import path from "path";
-
+import { useAuth } from "@/lib/context/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
+import { LogOut } from "lucide-react";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 interface NavigationBarProps {
   active: string;
   setActive: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const NavigationBar = ({ active, setActive }: NavigationBarProps) => {
+  const { user, loading, signOut } = useAuth();
+
+  const getFirstName = (name: string) => {
+    const array = name.split(" ");
+    if (array.length > 0) {
+      return array[0];
+    } else {
+      return name;
+    }
+  };
+
+  const handleSignOut = async () => {
+    signOut()
+      .then(() => {
+        toast.success("Signed Out", {
+          position: "top-center",
+          richColors: true,
+        });
+      })
+      .finally(() => {
+        redirect("/");
+      });
+  };
+
   const [scrolled, setScrolled] = useState<boolean>(false);
 
   const { ScrollToAbout } = useContext(ScrollContext);
@@ -70,7 +103,7 @@ const NavigationBar = ({ active, setActive }: NavigationBarProps) => {
   };
 
   return (
-    <div className="fixed top-4 inset-x-0 left-0 right-0 flex justify-center z-50">
+    <div className="fixed min-w-max w-fit mx-auto top-4 inset-x-0 left-0 right-0 flex justify-center z-50">
       <nav
         className={` navigation-box-shadow transition-all duration-300 px-4 py-2 rounded-full ${scrolled ? "bg-surface-elevated/25 backdrop-blur-md border border-border-default/20" : "bg-surface-elevated/95 border border-border-default/30 backdrop-blur-sm"}`}
       >
@@ -101,6 +134,33 @@ const NavigationBar = ({ active, setActive }: NavigationBarProps) => {
             <Button className="rounded-full" size={"sm"} variant={"outline"}>
               Contact
             </Button>
+
+            {loading && user ? (
+              <Skeleton className="w-full h-4 rounded-md" />
+            ) : user?.isAdmin ? (
+              <DropdownMenu modal={false}>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant={"ghost"}
+                    className="focus-visible:border-0! outline-0! ring-0!"
+                    size={"sm"}
+                  >
+                    {user ? getFirstName(user?.name) : null}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem
+                      onClick={handleSignOut}
+                      variant="destructive"
+                    >
+                      <LogOut />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : null}
           </ul>
         </div>
       </nav>

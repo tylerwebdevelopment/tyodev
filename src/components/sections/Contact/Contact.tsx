@@ -120,9 +120,6 @@ const Contact = () => {
                 side="left"
                 invalid={errors.company_name?.errors[0] ? true : false}
                 name="company_name"
-                className={
-                  errors.company_name?.errors[0] ? "input-control-invalid" : ""
-                }
                 placeholder="Company Name"
                 icon={Briefcase}
               />

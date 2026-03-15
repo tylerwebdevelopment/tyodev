@@ -39,7 +39,7 @@ const InputIcon: React.FC<InputIconProps> = ({
       <input
         {...props}
         autoComplete="off"
-        className={`input-control min-w-full placeholder:text-text-muted/80 ${props.className} control-icon ${Icon ? inputClass : ""}`}
+        className={`input-control min-w-full placeholder:text-text-muted/80 ${props.className} ${invalid ? 'input-control-invalid' : ''} control-icon ${Icon ? inputClass : ""}`}
       />
     </div>
   );
