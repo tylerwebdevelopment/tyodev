@@ -1,6 +1,4 @@
 "use client";
-import Image from "next/image";
-import MemojiSmiling from "@/assets/memoji-smiling.png";
 import { forwardRef } from "react";
 
 const About = forwardRef<HTMLDivElement | null>((props, ref) => {
@@ -16,9 +14,7 @@ const About = forwardRef<HTMLDivElement | null>((props, ref) => {
       <div className="flex flex-col items-center space-y-6">
         {/* Optional Memoji/Profile Image */}
 
-        <div className="bg-surface ring-2 ring-primary-500/50 hover:ring-primary-500 transition-shadow duration-300 rounded-full shadow-xlshadow-primary-500/20 h-32 w-32 flex justify-center items-center overflow-hidden">
-          <Image src={MemojiSmiling} alt="Memoji Smiling For About Section" />
-        </div>
+        <div className="bg-surface ring-2 ring-primary-500/50 hover:ring-primary-500 transition-shadow duration-300 rounded-full shadow-xlshadow-primary-500/20 h-32 w-32 flex justify-center items-center overflow-hidden"></div>
 
         <p className="text-text-main leading-7">
           I&apos;ve been<span className="text-primary-600"> passionate</span>{" "}

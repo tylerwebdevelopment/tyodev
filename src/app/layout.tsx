@@ -43,13 +43,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${poppins.variable} ${jetBrainsMono.variable} dark`}
+      className={`${inter.variable} ${poppins.variable} ${jetBrainsMono.variable}`}
     >
-      <body className="bg-page-background text-text-main">
+      <body className="bg-background text-foreground">
         <main className="relative min-h-screen flex flex-col">
           {/* grain overlay */}
           <div
-            className="pointer-events-none absolute inset-0 z-10 opacity-[0.03]"
+            className="pointer-events-none absolute inset-0 z-10 opacity-[0.02]"
             style={{
               backgroundImage: "url('/grain.jpeg')",
               backgroundRepeat: "repeat",

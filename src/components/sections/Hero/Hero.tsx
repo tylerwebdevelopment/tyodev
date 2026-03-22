@@ -1,5 +1,4 @@
 "use client";
-import Memoji from "@/assets/memoji.png";
 import Button from "@/components/ui";
 import { motion } from "motion/react";
 import { MousePointerClick } from "lucide-react";
@@ -7,14 +6,14 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <section className="relative w-full z-20 min-h-[65vh] bg-page-background/5 overflow-hidden">
+    <section className="relative w-full z-20 min-h-[65vh] bg-background/5 overflow-hidden">
       {/* Grid Background */}
       <div
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `
-        linear-gradient(to right, #1d2229 1px, transparent 1px),
-        linear-gradient(to bottom, #1d2229 1px, transparent 1px)
+        linear-gradient(to right, var(--border) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--border) 1px, transparent 1px)
       `,
           backgroundSize: "32px 32px",
           WebkitMaskImage: `radial-gradient(ellipse 90% 60% at 50% 0%, black 70%, transparent 100%)`,
@@ -36,12 +35,7 @@ const Hero = () => {
                 <span className="fill-triangle border-triangle -z-10 inline-flex items-center justify-center absolute left-1/2 -translate-x-1/2 -bottom-[12.8px]"></span>
               </p>
             </div>
-            <Image
-              src={Memoji}
-              className="w-40 h-40 mx-auto"
-              alt="Memoji Looking over laptop"
-              loading="eager"
-            />
+
             <div>
               <div className="inline-flex items-center bg-surface-elevated rounded-full pr-4 pl-0.5 border border-border-default/20 py-0.5">
                 <span className="before:content-[''] border border-border-default/30 before:block before:relative before:size-2 before:bg-success-500 before:border before:border-success-100 bg-surface/40 size-6.5 inline-flex justify-center items-center rounded-full before:rounded-full after:content-[''] after:size-4 after:bg-success-500/20 after:rounded-full after:absolute after:animate-caret-blink after:animation-duration-[3000ms]" />
@@ -65,9 +59,13 @@ const Hero = () => {
             </p>
           </div>
           <div className="py-9">
-            <motion.div whileHover={{ scale: 1.07 }} whileTap={{scale: 1.02}} className="w-fit mx-auto">
+            <motion.div
+              whileHover={{ scale: 1.07 }}
+              whileTap={{ scale: 1.02 }}
+              className="w-fit mx-auto"
+            >
               <Button
-                size={'lg'}
+                size={"lg"}
                 variant={"gradientCTA"}
                 className="text-lg font-bold text-shadow-md tracking-tightest"
               >

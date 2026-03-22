@@ -1,36 +1,28 @@
 "use client";
 import Link from "next/link";
-import React, { useContext, useEffect, useState } from "react";
-import { motion } from "motion/react";
-import Button, { Skeleton } from "@/components/ui";
-import { ScrollContext } from "@/lib/context/ScrollContext";
+import Button, {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui";
 import { useAuth } from "@/lib/context/AuthContext";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/DropdownMenu";
-import { LogOut } from "lucide-react";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
-interface NavigationBarProps {
-  active: string;
-  setActive: React.Dispatch<React.SetStateAction<string>>;
-}
+import { redirect, usePathname } from "next/navigation";
+import { Menu } from "lucide-react";
+import Logo from "@/components/custom/Logo";
 
-const NavigationBar = ({ active, setActive }: NavigationBarProps) => {
+const NavigationBar = () => {
   const { user, loading, signOut } = useAuth();
 
-  const getFirstName = (name: string) => {
-    const array = name.split(" ");
-    if (array.length > 0) {
-      return array[0];
-    } else {
-      return name;
-    }
-  };
+  const path = usePathname();
 
   const handleSignOut = async () => {
     signOut()
@@ -45,126 +37,181 @@ const NavigationBar = ({ active, setActive }: NavigationBarProps) => {
       });
   };
 
-  const [scrolled, setScrolled] = useState<boolean>(false);
+  type NavigationItem = {
+    href: string;
+    label: string;
+    description?: string;
+  };
 
-  const { ScrollToAbout } = useContext(ScrollContext);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 200) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // About Section Observer
-
-  const links = [
+  const NavigationMenuLinks: {
+    href: string;
+    label: string;
+    submenu?: {
+      title: string;
+      item: NavigationItem[];
+    }[];
+  }[] = [
     {
       href: "/",
       label: "Home",
     },
     {
-      href: "/#about",
+      href: "/about",
       label: "About",
     },
     {
       href: "/projects",
       label: "Projects",
+      submenu: [
+        {
+          title: "Applications",
+          item: [
+            {
+              href: "/projects",
+              label: "Full-Stack Apps",
+              description: 'Complete Apps with frontend and backend'
+            },
+          ],
+        },
+        {
+          title: "UI & Components",
+          item: [
+            {
+              href: "/projects",
+              label: "Custom Components",
+              description: "Custom Built UI elements and components",
+            },
+          ],
+        },
+        {
+          title: "Creative Work",
+          item: [
+            {
+              href: "/projects",
+              label: "UI Designs",
+              description: "Collection of visual designs",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      href: "/contact",
+      label: "Contact",
     },
   ];
 
-  const handleClick = (
-    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    linkHref: string,
-  ) => {
-    const isHome = window.location.pathname === "/";
-
-    if (linkHref === "/#about" && isHome && ScrollToAbout) {
-      e.preventDefault();
-      ScrollToAbout?.();
-      setActive(linkHref);
-    } else if (linkHref === "/" && isHome) {
-      e.preventDefault();
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-      setActive(linkHref);
-    } else {
-      setActive(linkHref);
-    }
+  const ListItem = ({
+    title,
+    children,
+    href,
+    ...props
+  }: React.ComponentPropsWithoutRef<"li"> & { href: string }) => {
+    return (
+      <li {...props}>
+        <NavigationMenuLink asChild>
+          <Link href={href}>
+            <div>
+              <p className="font-bold font-sans text-foreground/80">{title}</p>
+              <div>{children}</div>
+            </div>
+          </Link>
+        </NavigationMenuLink>
+      </li>
+    );
   };
 
   return (
-    <div className="fixed min-w-max w-fit mx-auto top-4 inset-x-0 left-0 right-0 flex justify-center z-50">
-      <nav
-        className={` navigation-box-shadow transition-all duration-300 px-4 py-2 rounded-full ${scrolled ? "bg-surface-elevated/25 backdrop-blur-md border border-border-default/20" : "bg-surface-elevated/95 border border-border-default/30 backdrop-blur-sm"}`}
-      >
-        <div>
-          <ul className="flex place-items-center gap-6">
-            {links.map((link) => (
-              <li key={link.href} className="relative">
-                <Link
-                  href={link.href}
-                  onClick={(e) => handleClick(e, link.href)}
-                  className={`nav-item ${active === link.href ? "active" : "text-text-main transition-colors duration-300 hover:text-primary-800"}`}
-                >
-                  {link.label}
-                </Link>
-                {active === link.href && (
-                  <motion.div
-                    layoutId="magic-line"
-                    className="absolute -bottom-px w-full left-0 h-0.5 rounded-full bg-primary-500"
-                    transition={{
-                      type: "spring",
-                      stiffness: 400,
-                      damping: 30,
-                    }}
-                  />
-                )}
-              </li>
-            ))}
-            <Button className="rounded-full" size={"sm"} variant={"outline"}>
-              Contact
-            </Button>
+    <nav
+      className="px-2 py-1 flex w-full items-center"
+      id="applicationNavigationBar"
+    >
+      {/* Brand Logo */}
+      {/* Navigation Left */}
+      {/* Mobile Shift To Center */}
+      <div id="navigationLeft" className="w-fit">
+        <Link href="/">
+          <Logo className="h-10 hover:fill-primary-400 w-fit transition-colors duration-300 fill-primary-500" />
+        </Link>
+      </div>
 
-            {loading && user ? (
-              <Skeleton className="w-full h-4 rounded-md" />
-            ) : user?.isAdmin ? (
-              <DropdownMenu modal={false}>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant={"ghost"}
-                    className="focus-visible:border-0! outline-0! ring-0!"
-                    size={"sm"}
+      {/* Desktop Navigation Center */}
+      {/* Navigation Center */}
+
+      <div className="z-50 mx-auto w-full" id="navigationCenter">
+        <NavigationMenu className="hidden md:flex md:mx-auto">
+          <NavigationMenuList className="flex gap-4">
+            {NavigationMenuLinks.map((index, k) => (
+              <NavigationMenuItem key={k}>
+                {index.submenu ? (
+                  <>
+                    <NavigationMenuTrigger>
+                      {index.label}
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="w-130 px-4 py-2">
+                        <div className="grid grid-cols-2 gap-4">
+                            {index.submenu.map((submenu, k) => (
+                              <div key={k} className="flex flex-col gap-2">
+                                <h1 className="text-lg text-center text-foreground/90 py-2 border-b border-border">{submenu.title}</h1>
+                                {submenu.item.map((item, k) => (
+                                  <ListItem className={`flex flex-col hover:bg-accent transition-colors duration-300 py-2 px-4 rounded-lg text-sm`} href={item.href} key={k} title={item.label}>
+                                    <p className="text-xs text-muted-foreground">{item.description}</p>
+                                  </ListItem>
+                                ))}
+                              </div>
+                            ))}
+                        </div>
+                      </ul>
+                    </NavigationMenuContent>
+                  </>
+                ) : (
+                  <Link className="h-9 px-4 py-2 hover:bg-accent transition-colors duration-300 rounded-lg" href={index.href}>{index.label}</Link>
+                )}
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+
+      {/* Mobile Trigger & Desktop CTA */}
+      {/* NavigationLeft */}
+      <div className="ml-auto w-fit" id="navigationRight">
+        {/* Sheet For Mobile Menu */}
+        <Button className="hidden md:flex" size='sm'>Request Quote</Button>
+        <Sheet>
+          <SheetTrigger className="md:hidden flex" asChild>
+            <Button variant={"ghost"} size={"icon"}>
+              <Menu strokeWidth={3} className="text-accent-foreground/75" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle className="text-accent-foreground/85 text-center font-sans tracking-wide">
+                Site Navigation
+              </SheetTitle>
+            </SheetHeader>
+            <div
+              className="grid grid-cols-1 justify-items-center"
+              id="mobileSheetContent"
+            >
+              <ul id="mobileSheetList" className="mt-8 flex-col flex space-y-8">
+                {NavigationMenuLinks.map((item, index) => (
+                  <Link
+                    href={item.href}
+                    key={index}
+                    className="h-9 rounded-lg hover:bg-accent flex items-center justify-center transition-colors duration-300 tracking-tight text-lg"
                   >
-                    {user ? getFirstName(user?.name) : null}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      onClick={handleSignOut}
-                      variant="destructive"
-                    >
-                      <LogOut />
-                      Sign Out
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : null}
-          </ul>
-        </div>
-      </nav>
-    </div>
+                    {item.label}
+                  </Link>
+                ))}
+                <Button variant="default">Request Free Quote</Button>
+              </ul>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </nav>
   );
 };
 
