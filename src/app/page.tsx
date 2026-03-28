@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useEffect, useRef } from "react";
-import { Projects, Hero, About, Contact } from "@/components/sections/";
+import { Hero, About, Contact, Services } from "@/components/sections/";
 import { ScrollContext } from "@/lib/context/ScrollContext";
 
 export const HomePage = () => {
@@ -41,8 +41,7 @@ export const HomePage = () => {
   return (
     <>
       <Hero />
-      <Projects />
-      <About ref={aboutRef} />
+      <Services />
       <Contact />
     </>
   );

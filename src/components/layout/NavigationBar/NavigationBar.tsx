@@ -13,30 +13,10 @@ import Button, {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui";
-import { useAuth } from "@/lib/context/AuthContext";
-import { toast } from "sonner";
-import { redirect, usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
-import Logo from "@/components/custom/Logo";
+import Logo from "@/components/custom/svg/Logo";
 
 const NavigationBar = () => {
-  const { user, loading, signOut } = useAuth();
-
-  const path = usePathname();
-
-  const handleSignOut = async () => {
-    signOut()
-      .then(() => {
-        toast.success("Signed Out", {
-          position: "top-center",
-          richColors: true,
-        });
-      })
-      .finally(() => {
-        redirect("/");
-      });
-  };
-
   type NavigationItem = {
     href: string;
     label: string;
@@ -69,7 +49,7 @@ const NavigationBar = () => {
             {
               href: "/projects",
               label: "Full-Stack Apps",
-              description: 'Complete Apps with frontend and backend'
+              description: "Complete Apps with frontend and backend",
             },
           ],
         },
@@ -123,7 +103,7 @@ const NavigationBar = () => {
 
   return (
     <nav
-      className="px-2 py-1 flex w-full items-center"
+      className="px-2 py-1 flex w-full max-w-[1550] z-50 sticky top-0 bg-background border-b border-border items-center"
       id="applicationNavigationBar"
     >
       {/* Brand Logo */}
@@ -145,28 +125,40 @@ const NavigationBar = () => {
               <NavigationMenuItem key={k}>
                 {index.submenu ? (
                   <>
-                    <NavigationMenuTrigger>
-                      {index.label}
-                    </NavigationMenuTrigger>
+                    <NavigationMenuTrigger>{index.label}</NavigationMenuTrigger>
                     <NavigationMenuContent>
                       <ul className="w-130 px-4 py-2">
                         <div className="grid grid-cols-2 gap-4">
-                            {index.submenu.map((submenu, k) => (
-                              <div key={k} className="flex flex-col gap-2">
-                                <h1 className="text-lg text-center text-foreground/90 py-2 border-b border-border">{submenu.title}</h1>
-                                {submenu.item.map((item, k) => (
-                                  <ListItem className={`flex flex-col hover:bg-accent transition-colors duration-300 py-2 px-4 rounded-lg text-sm`} href={item.href} key={k} title={item.label}>
-                                    <p className="text-xs text-muted-foreground">{item.description}</p>
-                                  </ListItem>
-                                ))}
-                              </div>
-                            ))}
+                          {index.submenu.map((submenu, k) => (
+                            <div key={k} className="flex flex-col gap-2">
+                              <h1 className="text-lg text-center text-foreground/90 py-2 border-b border-border">
+                                {submenu.title}
+                              </h1>
+                              {submenu.item.map((item, k) => (
+                                <ListItem
+                                  className={`flex flex-col hover:bg-accent transition-colors duration-300 py-2 px-4 rounded-lg text-sm`}
+                                  href={item.href}
+                                  key={k}
+                                  title={item.label}
+                                >
+                                  <p className="text-xs text-muted-foreground">
+                                    {item.description}
+                                  </p>
+                                </ListItem>
+                              ))}
+                            </div>
+                          ))}
                         </div>
                       </ul>
                     </NavigationMenuContent>
                   </>
                 ) : (
-                  <Link className="h-9 px-4 py-2 hover:bg-accent transition-colors duration-300 rounded-lg" href={index.href}>{index.label}</Link>
+                  <Link
+                    className="h-9 px-4 py-2 hover:bg-accent transition-colors duration-300 rounded-lg"
+                    href={index.href}
+                  >
+                    {index.label}
+                  </Link>
                 )}
               </NavigationMenuItem>
             ))}
@@ -178,38 +170,45 @@ const NavigationBar = () => {
       {/* NavigationLeft */}
       <div className="ml-auto w-fit" id="navigationRight">
         {/* Sheet For Mobile Menu */}
-        <Button className="hidden md:flex" size='sm'>Request Quote</Button>
-        <Sheet>
-          <SheetTrigger className="md:hidden flex" asChild>
-            <Button variant={"ghost"} size={"icon"}>
-              <Menu strokeWidth={3} className="text-accent-foreground/75" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle className="text-accent-foreground/85 text-center font-sans tracking-wide">
-                Site Navigation
-              </SheetTitle>
-            </SheetHeader>
-            <div
-              className="grid grid-cols-1 justify-items-center"
-              id="mobileSheetContent"
-            >
-              <ul id="mobileSheetList" className="mt-8 flex-col flex space-y-8">
-                {NavigationMenuLinks.map((item, index) => (
-                  <Link
-                    href={item.href}
-                    key={index}
-                    className="h-9 rounded-lg hover:bg-accent flex items-center justify-center transition-colors duration-300 tracking-tight text-lg"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-                <Button variant="default">Request Free Quote</Button>
-              </ul>
-            </div>
-          </SheetContent>
-        </Sheet>
+        <Button className="hidden md:flex" size="sm">
+          Request Quote
+        </Button>
+        <div className="md:hidden flex">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant={"ghost"} size={"icon"}>
+                <Menu strokeWidth={3} className="text-accent-foreground/75" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle className="text-accent-foreground/85 text-center font-sans tracking-wide">
+                  Site Navigation
+                </SheetTitle>
+              </SheetHeader>
+              <div
+                className="grid grid-cols-1 justify-items-center"
+                id="mobileSheetContent"
+              >
+                <ul
+                  id="mobileSheetList"
+                  className="mt-8 flex-col flex space-y-8"
+                >
+                  {NavigationMenuLinks.map((item, index) => (
+                    <Link
+                      href={item.href}
+                      key={index}
+                      className="h-9 rounded-lg hover:bg-accent flex items-center justify-center transition-colors duration-300 tracking-tight text-lg"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                  <Button variant="default">Request Free Quote</Button>
+                </ul>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </nav>
   );

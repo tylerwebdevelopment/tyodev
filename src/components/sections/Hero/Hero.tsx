@@ -1,82 +1,87 @@
-"use client";
+import { HeroMobileSvg, HeroDesktopComponents } from "@/components/custom/svg";
+import LineArrowDown from "@/components/custom/svg/LineArrowDown";
 import Button from "@/components/ui";
-import { motion } from "motion/react";
-import { MousePointerClick } from "lucide-react";
-import Image from "next/image";
+import { ArrowDownCircle, ArrowRight, Check, Send } from "lucide-react";
+
+const heroCardli = [
+  "Custom Web Development",
+  "Mobile First Design",
+  "Modern UI/UX Design Practices",
+  "Full Stack Applications",
+  "Custom Components and Features",
+  "Performance and Optimization",
+];
 
 const Hero = () => {
   return (
-    <section className="relative w-full z-20 min-h-[65vh] bg-background/5 overflow-hidden">
-      {/* Grid Background */}
+    <div className="min-h-screen w-full z-10 relative">
+      {/* Violet Storm Background with Top Glow */}
       <div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 -z-10"
         style={{
-          backgroundImage: `
-        linear-gradient(to right, var(--border) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--border) 1px, transparent 1px)
-      `,
-          backgroundSize: "32px 32px",
-          WebkitMaskImage: `radial-gradient(ellipse 90% 60% at 50% 0%, black 70%, transparent 100%)`,
-
-          maskImage:
-            "radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 100%)",
+          background:
+            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37, 99, 239, 0.25), transparent 90%)",
         }}
       />
+      {/* Your Content/Components */}
+      <section className="px-4 sm:px-0 sm:h-screen max-w-[1532px] min-[1532px]:max-w-[1532px] min-[1532px]:mx-auto overflow-hidden sm:bg-primary-200 hero-section-gradient z-50 py-4 sm:py-0">
+        {/* Mobile View */}
+        <div className="space-y-8 relative sm:bg-primary-300 lg:grid lg:grid-cols-2">
+          <div className="block sm:hidden max-w-1/2 w-full mx-auto bg-linear-to-br md:order-first from-0% to-90% from-primary-400 to-primary-200 shadow-accent shadow-xl p-4 rounded-xl">
+            <HeroMobileSvg className="text-primary-500 w-full" />
+          </div>
+          <div className="hidden sm:block sm:w-full lg:order-last lg:place-content-center lg:-translate-x-60 w-full z-10 lg:w-screen overflow-hidden">
+            <HeroDesktopComponents className="text-primary-600 w-screen lg:w-screen sm:max-w-[1024px]" />
+          </div>
 
-      {/* Hero Content */}
-      <div className="relative max-w-5xl mx-auto z-20  px-6 pt-32 pb-20 text-center">
-        <div className="space-y-3 ">
-          <div className="p-5 max-w-md space-x-1 space-y-0.5 mx-auto">
-            <div className="">
-              <p className="text-md text-text-main relative bg-surface-elevated py-1 before:w-[25px] before:content-[''] before:bg-surface-elevated before:block before:absolute before:-bottom-[.8px] before:h-1 before:z-10 before:right-1/2 before:translate-x-1/2 border border-border-default rounded-full px-4 before:content-[''] before: max-w-fit mx-auto ">
-                Hi I&apos;m{" "}
-                <span className="font-bold text-primary-600">Tyler</span>{" "}
-                <span className="emoji-wave">👋</span>
-                <span className="fill-triangle border-triangle -z-10 inline-flex items-center justify-center absolute left-1/2 -translate-x-1/2 -bottom-[12.8px]"></span>
+          <div className="sm:absolute z-50 lg:flex lg:flex-col xl:gap-0 sm:grid xl:translate-y-3 xl:translate-x-5 sm:gap-2 sm:px-2 lg:relative lg:order-first sm:items-center lg:gap-3 lg:translate-y-0 sm:grid-cols-2 sm:w-full sm:bottom-0 sm:translate-y-4/6 sm:justify-items-center">
+            {/* First Main Card */}
+            <div className="flex flex-col space-y-3 max-w-md lg:max-w-md xl:border-b-0 xl:rounded-tr-lg xl:rounded-tl-lg xl:z-50 xl:shadow-none xl:max-w-xl xl:rounded-none xl:translate-y-0 lg:space-y-0 lg:py-5 lg:px-10 mx-auto xl:mx-0 gap-2 sm:gap-6 lg:mr-auto lg:ml-5 lg:mt-4 lg:translate-y-10 lg:translate-x-0 sm:max-w-sm sm:bg-surface sm:py-4 sm:rounded-xl sm:border-border sm:border sm:shadow-xl items-center text-center">
+              <h1 className="font-heading text-3xl text-foreground/75 font-bold tracking-tightest">
+                <span className="text-primary-500/75">Modern</span> Websites
+                that grow your business
+              </h1>
+              <p className="text-muted-foreground text-md">
+                I create custom, responsive web experiences designed to attract
+                more customers, boost engagement, and reflect your brand
+                professionally.
               </p>
-            </div>
-
-            <div>
-              <div className="inline-flex items-center bg-surface-elevated rounded-full pr-4 pl-0.5 border border-border-default/20 py-0.5">
-                <span className="before:content-[''] border border-border-default/30 before:block before:relative before:size-2 before:bg-success-500 before:border before:border-success-100 bg-surface/40 size-6.5 inline-flex justify-center items-center rounded-full before:rounded-full after:content-[''] after:size-4 after:bg-success-500/20 after:rounded-full after:absolute after:animate-caret-blink after:animation-duration-[3000ms]" />
-                <p className="text-text-muted text-sm pl-2">
-                  Available For Projects
-                </p>
+              <div className="flex flex-col xl:pb-2 sm:flex-row sm:gap-4 gap-3 mt-3 sm:mt-2">
+                <Button size="sm" className="sm:rounded-full lg:rounded-lg">
+                  View Projects <ArrowRight />
+                </Button>
+                <Button
+                  size="sm"
+                  className="sm:rounded-full lg:rounded-lg"
+                  variant="secondary"
+                >
+                  Contact <Send />
+                </Button>
               </div>
             </div>
-          </div>
-          <div className="tracking-tight py-3">
-            <h1 className="text-2xl font-bold">
-              Full Stack Developer Building
-            </h1>
-            <h1 className="text-2xl font-bold">
-              <span className="animated-gradient-text">Clean</span>, Interactive
-              Web Experiences
-            </h1>
-            <p className="text-base mt-2 text-text-muted tracking-wider">
-              I Build fast, modern web applications using React, Next.js, and
-              thoughtful UI Design
-            </p>
-          </div>
-          <div className="py-9">
-            <motion.div
-              whileHover={{ scale: 1.07 }}
-              whileTap={{ scale: 1.02 }}
-              className="w-fit mx-auto"
-            >
-              <Button
-                size={"lg"}
-                variant={"gradientCTA"}
-                className="text-lg font-bold text-shadow-md tracking-tightest"
-              >
-                Lets Connect
-                <MousePointerClick className="" />
-              </Button>
-            </motion.div>
+            {/* Second Card */}
+            <div className="hidden sm:flex sm:flex-col xl:rounded-none xl:bg-surface-muted xl:border-t-2 xl:pt-5 sm:gap-3 lg:max-w-xl xl:rounded-br-lg xl:rounded-bl-lg lg:ml-auto xl:ml-0 sm:order-last sm:max-w-sm sm:w-full sm:h-full lg:translate-x-80 lg:translate-y-10 xl:translate-x-0 xl:translate-y-0 sm:bg-surface sm:py-4 px-4 sm:rounded-xl sm:border-border sm:border sm:shadow-xl">
+              <h1 className="text-xl font-bold font-heading text-foreground/75 tracking-wide text-center">
+                Built For Your{" "}
+                <span className="text-primary-500/75">Business</span>
+              </h1>
+              <ul className="lg:mx-auto lg:h-full lg:w-full">
+                <div className="flex flex-col gap-4 lg:grid xl:flex xl:pt-1 xl:place-items-start xl:gap-6 lg:h-full lg:grid-cols-2 lg:max-w-xl lg:w-fit lg:mx-auto lg:items-center">
+                  {heroCardli.map((k, i) => (
+                    <div key={i}>
+                      <li className="flex items-center lg:text-sm gap-2">
+                        <Check className="size-4 text-success" />
+                        <p>{k}</p>
+                      </li>
+                    </div>
+                  ))}
+                </div>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 export default Hero;
