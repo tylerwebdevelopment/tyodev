@@ -2,7 +2,7 @@ import React from 'react'
 
 interface EmailTemplateOwnerProps{
   name: string;
-  company_name: string;
+  company_name?: string | 'Not Entered';
   email: string;
   message: string;
 }
