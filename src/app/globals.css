@@ -8,9 +8,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.text-hero {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
 h1 {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-size: clamp(2rem, 5vw, 3.75rem);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.03em;
